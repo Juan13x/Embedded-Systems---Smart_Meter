@@ -1,0 +1,21 @@
+idf_component_register(SRCS 
+"classes/measurements/measurements.cpp"
+"classes/simulation/simulation_adc.cpp"
+"bluetooth/bluetooth.cpp"
+"control/configuration/configuration.cpp"
+"control/decoder/decoder.cpp"
+"control/rtos/rtos.cpp"
+"internet/ethernet/enc28j60/esp_eth_mac_enc28j60.c"
+"internet/ethernet/enc28j60/esp_eth_phy_enc28j60.c"
+"internet/ethernet/enc28j60/my_enc28j60.cpp"
+"databases/firebase/rest_api/rest_api.cpp"
+"databases/cloud_repository/cloud_repository.cpp"
+"databases/persistent_data/persistent_data.cpp"
+"internet/internet/internet.cpp"
+"internet/protocol/http/http.cpp"
+"lorawan/lorawan.cpp"
+"setup/setup.cpp"
+"main.cpp"
+                    INCLUDE_DIRS "."
+                    EMBED_TXTFILES certificates/certificate.pem)
+target_compile_options(${COMPONENT_LIB} PRIVATE "-Wno-format")
