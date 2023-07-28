@@ -14,7 +14,7 @@ void setupRtosVariables(c_Measurements & measurementsData){
 
 void setupMemoryMangament(){
     //Use next line only for the first time configurating this MCU. A command to do this is mandatory to be added.
-    //myMemoryManagement.clearAllData();
+    myMemoryManagement.clearAllData();
     myMemoryManagement.setMaxValueForNvsCounters(40);
     myMemoryManagement.resetNvsCounters();
     int nvsInitValue = 0;

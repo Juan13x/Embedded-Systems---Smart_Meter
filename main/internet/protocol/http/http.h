@@ -8,6 +8,7 @@
 #include "esp_event.h"
 #include "esp_http_client.h"
 
+
 static const unsigned int k_internet_http_MAX_RECV_BUFFER = 512;
 static const unsigned int k_internet_http_MAX_OUTPUT_BUFFER = 1000 * k_main_AMOUNT_MEASUREMENTS_FOR_PAYLOAD;
 static const char k_internet_http_TAG[] = "HTTP_CLIENT";

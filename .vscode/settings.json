@@ -82,6 +82,8 @@
     "internet": "cpp",
     "io_context": "cpp",
     "queue.h": "c",
-    "semphr.h": "c"
+    "semphr.h": "c",
+    "esp_netif.h": "c",
+    "esp_eth.h": "c"
   }
 }

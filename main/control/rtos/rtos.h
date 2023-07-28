@@ -1,3 +1,6 @@
+#ifndef RTOS_H
+#define RTOS_H
+
 #include "program_variables.h"
 #include "classes/simulation/simulation_adc.h"
 #include "lorawan/lorawan.h"
@@ -35,3 +38,5 @@ struct s_InterfaceData{
     void * data;
     unsigned char control = 0;
 };
+
+#endif //RTOS_H

@@ -1,5 +1,5 @@
-#ifndef PROGRAM_CONSTANTS_H
-#define PROGRAM_CONSTANTS_H
+#ifndef PROGRAM_VARIABLES_H
+#define PROGRAM_VARIABLES_H
 
 #include <stdio.h>
 #include "string.h"
@@ -144,4 +144,4 @@ public:
 
 extern c_AppStates states;
 
-#endif //PROGRAM_CONSTANTS_H
+#endif //PROGRAM_VARIABLES_H

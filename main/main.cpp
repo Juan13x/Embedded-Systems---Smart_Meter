@@ -4,23 +4,27 @@
 
 extern "C" void app_main(void)
 {
+    ESP_LOGI("ESP", "start");
     c_Measurements sample;
     sample.enableAllReading();
-
-    s_SampleArrays measurementsAndControl;
-    measurementsAndControl.sampleReturn = sample.getMeasurementData();
+    ESP_LOGI("ESP", "sample");
+    s_SampleArrays * measurementsAndControl = new s_SampleArrays;
+    if(measurementsAndControl == NULL)
+    {
+        ESP_LOGE("Memory", "Could not Allocate Dinamic Memory");
+    }
+    measurementsAndControl->sampleReturn = sample.getMeasurementData();
     s_InterfaceData internetData;
     s_InterfaceData loraData;
     s_InterfaceData bluetoothData;
-    
-    internetData.data = (void *) &measurementsAndControl.internet;
+    internetData.data = (void *) &(measurementsAndControl->internet);
     //The next line goes into a configuration function
     internetData.control = e_cloudRepositoryProtocols::rest;
     ///TODO: configure initial state of LORA
-    loraData.data = (void *) &measurementsAndControl.lora;
+    loraData.data = (void *) &(measurementsAndControl->lora);
     ///TODO: configure initial state of Bluetooth
-    bluetoothData.data = (void *) &measurementsAndControl.bluetooth;
-
+    bluetoothData.data = (void *) &(measurementsAndControl->bluetooth);
+    ESP_LOGI("ESP", "setup");
     setupMemoryMangament();
     setupRtosVariables(sample);
     setupInternetInternalSystem();
@@ -29,7 +33,7 @@ extern "C" void app_main(void)
     setupBluetooth();
 
     TaskHandle_t generalHandler;
-
+    ESP_LOGI("ESP", "tasks");
     if(xTaskCreate(
         taskDSP, 
         "taskDSP", 
@@ -37,6 +41,7 @@ extern "C" void app_main(void)
         k_main_TASK_DSP_PRIORITY, 
         &generalHandler) == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
         { /*TODO = error*/ }
+    ESP_LOGI("ESP", "taskDSP");
     if(xTaskCreate(
         taskUpdateData, 
         "taskUpdateData", 
@@ -44,6 +49,7 @@ extern "C" void app_main(void)
         k_main_TASK_UPDATE_DATA_PRIORITY, 
         &generalHandler) == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
         { /*TODO = error*/ }
+    ESP_LOGI("ESP", "taskUpdateData");
     if(xTaskCreate(
         taskSendOverInternet,
         "taskSendOverInternet", 
@@ -51,6 +57,7 @@ extern "C" void app_main(void)
         k_main_TASK_INTERNET_PRIORITY, 
         &generalHandler) == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
         { /*TODO = error*/ }
+    ESP_LOGI("ESP", "taskSendOverInternet");
     if(xTaskCreate(
         taskSendOverLorawan, 
         "taskSendOverLorawan", 
@@ -69,7 +76,7 @@ extern "C" void app_main(void)
     if(xTaskCreate(
         taskConfiguration,
         "taskConfiguration",
-        8192,
+        16384,
         NULL,
         k_main_TASK_CONFIGURATION_PRIORITY,
         &generalHandler) == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
@@ -79,4 +86,6 @@ extern "C" void app_main(void)
     while(1){
         vTaskDelay(1);
     }
+
+    delete measurementsAndControl;
 }
